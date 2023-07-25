@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services.Application/bin/Debug/net6.0
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services.Application/obj
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services.Tests/bin/Debug/net6.0
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services.Tests/obj
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services/obj
+/PEAKUP.Azure.Services/PEAKUP.Azure.Services/bin/Debug/net6.0
+/PEAKUP.Azure.Services/.vs
+App.config
+testhost.dll.config

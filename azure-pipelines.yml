@@ -1,0 +1,48 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+variables:
+  buildConfiguration: 'Release'
+  majorVersion: 1
+  minorVersion: 0
+  patchVersion: $[counter(variables['minorVersion'], 0)]
+  version: '$(majorVersion).$(minorVersion).$(patchVersion)'
+
+steps:
+
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 6.0.x
+    performMultiLevelLookup: true
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/PEAKUP.Azure.Services.csproj'
+  displayName: 'dotnet build'
+  
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
+    command: 'pack'
+    packagesToPack: '**/PEAKUP.Azure.Services.csproj'
+    versioningScheme: 'byEnvVar'
+    versionEnvVar: 'version'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet push'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'PEAKUP.Azure.Services NUGET Package'
+  enabled: false
+  
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'PEAKUP.Azure.Services NUGET Package'
